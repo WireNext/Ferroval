@@ -13,21 +13,22 @@
         .station-item:last-child .line-vertical { height: 50%; }
         .live-pulse { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .train-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
 <body class="bg-[#F8F9FA] text-slate-800 font-sans">
 
-    <header class="bg-white border-b border-gray-100 p-6 mb-8">
+    <header class="bg-white border-b border-gray-100 p-6 mb-8 shadow-sm">
         <div class="container mx-auto flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <div class="line-l1 text-white w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shadow-yellow-200 italic">1</div>
                 <div>
                     <h1 class="text-2xl font-black text-slate-900 uppercase tracking-tight italic">Línia 1</h1>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">Ferroval • Temps Real</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">Ferroval • Pont de Dades 2026</p>
                 </div>
             </div>
-            <div class="bg-emerald-50 text-emerald-600 px-4 py-2 rounded-full text-[10px] font-black border border-emerald-100 live-pulse italic">
-                • Connectat
+            <div id="status-badge" class="bg-slate-100 text-slate-500 px-4 py-2 rounded-full text-[10px] font-black border border-slate-200 italic uppercase">
+                Esperant selecció
             </div>
         </div>
     </header>
@@ -35,7 +36,7 @@
     <main class="container mx-auto p-4 flex flex-col lg:flex-row gap-8">
         
         <section class="lg:w-1/3 bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 h-fit">
-            <h2 class="text-lg font-black mb-10 text-slate-400 uppercase tracking-widest italic">📍 Recorregut</h2>
+            <h2 class="text-lg font-black mb-10 text-slate-400 uppercase tracking-widest italic">📍 Estat Recorregut</h2>
             <div class="relative ml-2">
                 <div class="station-item relative flex items-center mb-10 pl-10">
                     <div class="line-vertical"></div><div class="station-dot absolute left-0"></div>
@@ -55,64 +56,109 @@
         <section class="lg:w-2/3">
             <div class="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 min-h-[500px]">
                 <div class="mb-10">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 mb-2 block italic">Tria una estació</label>
-                    <select id="station-selector" class="w-full bg-slate-50 border border-slate-100 text-slate-800 p-5 rounded-3xl font-black text-lg outline-none focus:ring-4 focus:ring-yellow-400/10 cursor-pointer italic">
-                        <option value="">-- Selecciona --</option>
-                        <option value="5">Àngel Guimerà</option>
-                        <option value="1">Bétera</option>
-                        <option value="29">Empalme</option>
-                        <option value="10">València Sud</option>
-                        <option value="106">Carlet</option>
-                        <option value="122">Castelló</option>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 mb-2 block italic">Tria una parada per consultar previsions</label>
+                    <select id="station-selector" class="w-full bg-slate-50 border border-slate-100 text-slate-800 p-5 rounded-3xl font-black text-lg outline-none focus:ring-4 focus:ring-yellow-400/10 cursor-pointer italic appearance-none">
+                        <option value="">-- Selecciona Estació --</option>
+                        <option value="107">Bétera</option>
+                        <option value="17">Àngel Guimerà</option>
+                        <option value="35">Castelló</option>
+                        <option value="30">València Sud</option>
+                        <option value="55">Empalme</option>
+                        <option value="33">Torrent</option>
+                        <option value="16">Xàtiva</option>
                     </select>
                 </div>
 
                 <div id="timetable-display" class="space-y-4">
-                    <p class="text-center py-20 text-slate-300 italic uppercase text-xs font-black tracking-widest">Tria estació per vore horaris</p>
+                    <div class="flex flex-col items-center justify-center py-24 opacity-20 text-center">
+                        <div class="text-6xl mb-4">🚄</div>
+                        <p class="text-xs font-black uppercase tracking-[0.2em] italic">Les dades apareixeran ací</p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <footer class="container mx-auto p-8 text-center">
+        <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest italic">Dades subministrades per MetroAPI via Ferroval Proxy</p>
+    </footer>
+
     <script>
         document.getElementById('station-selector').addEventListener('change', async function() {
             const display = document.getElementById('timetable-display');
-            const id = this.value;
+            const status = document.getElementById('status-badge');
+            const stationId = this.value;
 
-            if (!id) return;
+            if (!stationId) return;
 
-            display.innerHTML = '<div class="flex justify-center py-20"><div class="w-8 h-8 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin"></div></div>';
+            // Estat de càrrega
+            display.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-20">
+                    <div class="w-10 h-10 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase italic tracking-widest">Identificant App...</p>
+                </div>`;
+            
+            status.innerText = "CONNECTANT...";
+            status.className = "bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-[10px] font-black border border-blue-100 live-pulse italic";
 
             try {
-                // Utilitzem l'endpoint de previsions que sol ser menys restrictiu amb el User-Agent
-                const response = await fetch(`https://metroapi.alexbadi.es/v1/prevision/${id}`);
+                // IMPORTANT: Cridem al fitxer PHP que hem creat per saltar el bloqueig de User-Agent
+                const response = await fetch(`api.php?id=${stationId}`);
+                
+                if (!response.ok) throw new Error('Error en el servidor proxy');
+                
                 const data = await response.json();
 
-                // L'API d'Alex Badi en v1/prevision sol tornar un array directament
+                // Gestionem si l'API retorna un error de validació
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // L'API pot tornar l'array directament o dins de 'predicciones'
                 const trens = Array.isArray(data) ? data : (data.predicciones || []);
 
                 if (trens.length === 0) {
-                    display.innerHTML = '<p class="text-center py-20 font-black text-slate-300 uppercase italic">No hi ha trens ara mateix</p>';
+                    display.innerHTML = `
+                        <div class="text-center py-20">
+                            <p class="text-4xl mb-4 text-slate-200">🌙</p>
+                            <p class="font-black text-slate-300 uppercase italic text-xs tracking-widest">No hi ha trens programats per a aquesta parada</p>
+                        </div>`;
+                    status.innerText = "SENSE SERVEI";
+                    status.className = "bg-slate-100 text-slate-400 px-4 py-2 rounded-full text-[10px] font-black border border-slate-200 italic";
                     return;
                 }
 
+                status.innerText = "DADES EN DIRECTE";
+                status.className = "bg-emerald-50 text-emerald-600 px-4 py-2 rounded-full text-[10px] font-black border border-emerald-100 italic";
+
                 display.innerHTML = trens.map(t => `
-                    <div class="flex items-center justify-between p-6 rounded-[30px] border border-slate-50 bg-white shadow-sm hover:shadow-md transition-all">
+                    <div class="train-card flex items-center justify-between p-6 rounded-[30px] border border-slate-50 bg-white shadow-sm hover:shadow-md">
                         <div class="flex items-center gap-5">
-                            <div class="w-12 h-12 rounded-2xl bg-yellow-500 text-white flex items-center justify-center font-black italic shadow-sm">${t.linea || '1'}</div>
+                            <div class="w-12 h-12 rounded-2xl bg-yellow-500 text-white flex items-center justify-center font-black italic shadow-lg shadow-yellow-100">${t.linea || '1'}</div>
                             <div>
                                 <p class="font-black text-slate-800 text-lg uppercase tracking-tighter italic">${t.destino}</p>
-                                <p class="text-[9px] font-black text-yellow-500 uppercase tracking-widest italic mt-0.5">Temps Real</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <p class="text-[9px] font-black text-slate-400 uppercase italic tracking-widest">Confirmant temps real</p>
+                                </div>
                             </div>
                         </div>
                         <div class="text-right">
-                            <p class="text-3xl font-black text-slate-900 tracking-tighter italic">${t.minutos === "0" ? 'Ara' : t.minutos + ' min'}</p>
+                            <p class="text-3xl font-black text-slate-900 tracking-tighter italic">${t.minutos == "0" ? 'Ara' : t.minutos + "<span class='text-sm ml-1'>min</span>"}</p>
                         </div>
                     </div>
                 `).join('');
 
             } catch (e) {
-                display.innerHTML = '<div class="p-8 bg-red-50 text-red-500 rounded-[30px] text-center font-bold text-xs uppercase italic">⚠️ Error de connexió amb MetroAPI</div>';
+                console.error("Error Ferroval:", e);
+                display.innerHTML = `
+                    <div class="p-8 bg-red-50 text-red-600 rounded-[30px] border border-red-100 text-center">
+                        <p class="font-black text-xs uppercase italic mb-2">⚠️ Error de validació (2026)</p>
+                        <p class="text-[10px] opacity-70">${e.message}</p>
+                        <p class="text-[9px] mt-4 font-bold text-red-400">Comprova que el fitxer api.php estiga al servidor.</p>
+                    </div>`;
+                status.innerText = "ERROR AUTH";
+                status.className = "bg-red-50 text-red-600 px-4 py-2 rounded-full text-[10px] font-black border border-red-100 italic";
             }
         });
     </script>
