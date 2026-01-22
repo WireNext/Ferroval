@@ -3,213 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Línia 1 Metrovalencia - Ferroval</title>
+    <title>Línia 1 - Ferroval</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .line-l1 { background-color: #f3bc2e; } 
-        .station-dot { width: 12px; height: 12px; border-radius: 50%; background: white; border: 3px solid #f3bc2e; position: relative; z-index: 10; }
+        .line-l1 { background-color: #f3bc2e; }
+        .station-dot { width: 14px; height: 14px; border-radius: 50%; background: white; border: 4px solid #f3bc2e; position: relative; z-index: 10; }
         .line-vertical { position: absolute; left: 5px; top: 0; bottom: 0; width: 4px; background-color: #f3bc2e; z-index: 0; }
-        .station-item:last-child .line-vertical { height: 50%; }
         .station-item:first-child .line-vertical { top: 50%; }
-        
-        /* Animació de pols per al directe */
-        .live-dot { animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        .station-item:last-child .line-vertical { height: 50%; }
+        .live-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans">
+<body class="bg-[#F8F9FA] text-slate-800 font-sans">
 
-    <nav class="line-l1 p-6 text-white shadow-lg">
-        <div class="container mx-auto">
-            <a href="/lineas.html" class="text-sm font-bold opacity-80 hover:opacity-100 uppercase tracking-widest">← Tornar a Línies</a>
-            <div class="flex items-center mt-4">
-                <span class="bg-white text-yellow-600 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black mr-4 shadow-md">1</span>
+    <header class="bg-white border-b border-gray-100 p-6 mb-8">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="line-l1 text-white w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shadow-yellow-200">1</div>
                 <div>
-                    <h1 class="text-3xl font-black uppercase tracking-tight">Línia 1</h1>
-                    <p class="font-medium opacity-90">Bétera - Castelló</p>
+                    <h1 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Línia 1</h1>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Bétera <-> Castelló</p>
                 </div>
             </div>
+            <div class="bg-yellow-50 text-yellow-600 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border border-yellow-100 live-pulse">
+                • En Directe GTFS
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <main class="container mx-auto p-4 lg:flex lg:gap-8 mt-6">
+    <main class="container mx-auto p-4 flex flex-col lg:flex-row gap-8">
         
-        <section class="lg:w-1/3 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 h-fit">
-            <h2 class="text-xl font-bold mb-6 flex items-center">
-                <span class="mr-2">📍</span> Estacions Principals
+        <section class="lg:w-1/3 bg-white p-8 rounded-[40px] shadow-sm border border-gray-100">
+            <h2 class="text-lg font-black mb-10 flex items-center gap-2 text-slate-400 uppercase tracking-widest">
+                <span>📍</span> Estacions L1
             </h2>
             
-            <div class="relative">
-                <div class="station-item relative flex items-center mb-6 pl-8">
+            <div class="relative ml-2">
+                <div class="station-item relative flex items-center mb-10 pl-10">
                     <div class="line-vertical"></div>
                     <div class="station-dot absolute left-0"></div>
                     <div>
-                        <p class="font-bold text-gray-800">Bétera</p>
-                        <span class="text-xs text-gray-400 uppercase">Capçalera Nord</span>
+                        <p class="font-black text-slate-800 uppercase tracking-tighter">Bétera</p>
+                        <p class="text-[9px] font-bold text-slate-300 uppercase">Capçalera Nord</p>
                     </div>
                 </div>
 
-                <div class="station-item relative flex items-center mb-6 pl-8">
+                <div class="station-item relative flex items-center mb-10 pl-10">
                     <div class="line-vertical"></div>
                     <div class="station-dot absolute left-0"></div>
                     <div>
-                        <p class="font-bold text-gray-800">Empalme</p>
+                        <p class="font-black text-slate-800 uppercase tracking-tighter text-lg">Empalme</p>
                         <div class="flex gap-1 mt-1">
-                            <span class="bg-red-500 text-[10px] text-white px-1 rounded uppercase font-bold text-[8px]">L2</span>
-                            <span class="bg-emerald-400 text-[10px] text-white px-1 rounded uppercase font-bold text-[8px]">L4</span>
+                            <span class="bg-red-500 text-[8px] text-white px-1.5 py-0.5 rounded font-black">L2</span>
+                            <span class="bg-emerald-400 text-[8px] text-white px-1.5 py-0.5 rounded font-black">L4</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="station-item relative flex items-center mb-6 pl-8">
+                <div class="station-item relative flex items-center mb-10 pl-10">
                     <div class="line-vertical"></div>
                     <div class="station-dot absolute left-0"></div>
                     <div>
-                        <p class="font-bold text-gray-800 text-lg italic underline decoration-yellow-400 decoration-4 underline-offset-4">Àngel Guimerà</p>
-                        <div class="flex flex-wrap gap-1 mt-1">
-                            <span class="bg-red-500 text-[10px] text-white px-1 rounded font-bold text-[8px]">L2</span>
-                            <span class="bg-red-600 text-[10px] text-white px-1 rounded font-bold text-[8px]">L3</span>
-                            <span class="bg-red-400 text-[10px] text-white px-1 rounded font-bold text-[8px]">L5</span>
-                            <span class="bg-orange-400 text-[10px] text-white px-1 rounded font-bold text-[8px]">L9</span>
+                        <p class="font-black text-slate-900 uppercase tracking-tighter text-xl border-b-4 border-yellow-400 inline-block">Àngel Guimerà</p>
+                        <div class="flex gap-1 mt-1">
+                            <span class="bg-red-500 text-[8px] text-white px-1.5 py-0.5 rounded font-black">L2</span>
+                            <span class="bg-red-600 text-[8px] text-white px-1.5 py-0.5 rounded font-black">L3</span>
+                            <span class="bg-red-400 text-[8px] text-white px-1.5 py-0.5 rounded font-black">L5</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="station-item relative flex items-center mb-2 pl-8">
+                <div class="station-item relative flex items-center mb-2 pl-10">
                     <div class="line-vertical"></div>
                     <div class="station-dot absolute left-0"></div>
                     <div>
-                        <p class="font-bold text-gray-800">Castelló</p>
-                        <span class="text-xs text-gray-400 uppercase">Capçalera Sud</span>
+                        <p class="font-black text-slate-800 uppercase tracking-tighter">Castelló</p>
+                        <p class="text-[9px] font-bold text-slate-300 uppercase">Capçalera Sud</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="lg:w-2/3 space-y-6">
-            
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl font-bold flex items-center text-gray-800 uppercase tracking-tighter">
-                        <span class="mr-2 text-yellow-500 italic">⌚</span> Pròxims trens
-                    </h2>
-                    <div class="flex items-center gap-2 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-100">
-                        <span class="h-2 w-2 rounded-full bg-yellow-500 live-dot"></span>
-                        <span class="text-[10px] font-black text-yellow-700 uppercase tracking-widest">En Directe</span>
-                    </div>
-                </div>
-
-                <div class="relative mb-8">
-                    <select id="station-selector" class="w-full bg-gray-50 border border-gray-100 text-gray-800 p-4 rounded-2xl focus:ring-4 focus:ring-yellow-500/20 outline-none appearance-none font-bold transition-all cursor-pointer text-lg">
-                        <option value="">-- Selecciona estació --</option>
-                        <option value="betera.html">Bétera</option>
-                        <option value="empalme.html">Empalme</option>
-                        <option value="angel-guimera.html">Àngel Guimerà</option>
-                        <option value="castello.html">Castelló</option>
-                    </select>
-                    <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-yellow-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
-                        </svg>
+        <section class="lg:w-2/3">
+            <div class="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 min-h-[500px]">
+                
+                <div class="mb-10">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-2 mb-2 block">Consulta Pròxims Trens</label>
+                    <div class="relative">
+                        <select id="station-selector" class="w-full bg-slate-50 border border-slate-100 text-slate-800 p-5 rounded-3xl font-black text-lg appearance-none outline-none focus:ring-4 focus:ring-yellow-400/10 transition-all cursor-pointer">
+                            <option value="">Selecciona parada...</option>
+                            <option value="0">Empalme</option>
+                            <option value="1">Beniferri</option>
+                            <option value="4">Àngel Guimerà</option>
+                            <option value="10">València Sud</option>
+                            <option value="13">Torrent</option>
+                            <option value="29">Castelló</option>
+                        </select>
+                        <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-yellow-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
 
                 <div id="timetable-display" class="space-y-4">
-                    <div class="text-center py-12 border-2 border-dashed border-gray-100 rounded-3xl">
-                        <p class="text-sm text-gray-400 font-medium italic">Selecciona una estació del llistat per a veure els horaris de pas oficials.</p>
+                    <div class="flex flex-col items-center justify-center py-20 opacity-30 text-center">
+                        <div class="text-5xl mb-4">🚉</div>
+                        <p class="text-sm font-bold uppercase tracking-widest">Tria una estació del llistat<br>per veure el pas de trens</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="bg-gray-900 p-2 rounded-3xl shadow-xl overflow-hidden">
-                <img src="https://www.metrovalencia.es/wp-content/uploads/2022/05/Plano-Red-Metrovalencia-Mayo-2022.png" alt="Plànol Metro" class="rounded-2xl w-full opacity-90">
             </div>
-
+            
+            <footer class="mt-8 text-center">
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em]">© 2026 Ferroval • València Sud</p>
+            </footer>
         </section>
     </main>
-
-    <footer class="p-12 text-center">
-        <p class="text-gray-400 text-[10px] uppercase font-bold tracking-widest">© 2026 Ferroval • València</p>
-        <p class="text-gray-300 text-[8px] mt-2">Dades processades del GTFS oficial de Metrovalencia.</p>
-    </footer>
 
     <script>
         document.getElementById('station-selector').addEventListener('change', async function() {
             const display = document.getElementById('timetable-display');
-            const selectedFile = this.value;
+            const colIndex = this.value;
 
-            if (!selectedFile) {
-                display.innerHTML = '<div class="text-center py-12 border-2 border-dashed border-gray-100 rounded-3xl"><p class="text-sm text-gray-400 italic">Selecciona una estació...</p></div>';
-                return;
-            }
+            if (!colIndex) return;
 
             display.innerHTML = `
-                <div class="flex flex-col items-center justify-center py-12">
-                    <div class="w-8 h-8 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                    <p class="text-xs font-black uppercase text-yellow-600 tracking-widest">Sincronitzant dades...</p>
+                <div class="flex flex-col items-center py-20">
+                    <div class="w-10 h-10 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin"></div>
+                    <p class="mt-4 text-[10px] font-black text-yellow-600 uppercase tracking-widest">Analitzant taula GTFS...</p>
                 </div>`;
 
             try {
-                // RUTA: Canvia '/horaris/' per la ruta real on puges la carpeta html de Metrovalencia
-                const response = await fetch(`/horaris/metrovlc/metro/1.html`);
-                if (!response.ok) throw new Error('Fitxer no trobat');
-                
+                // RUTA AL FITXER QUE ENS HAS MOSTRAT
+                const response = await fetch('/horaris/metrovlc/metro/1.html');
                 const htmlText = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(htmlText, 'text/html');
 
-                // Busquem les files de la taula que genera gtfs-to-html
-                const rows = Array.from(doc.querySelectorAll('table tbody tr'));
-
-                // Calculem l'hora actual per filtrar
+                const rows = Array.from(doc.querySelectorAll('tr.trip-row'));
                 const ara = new Date();
-                const hActual = ara.getHours().toString().padStart(2, '0');
-                const mActual = ara.getMinutes().toString().padStart(2, '0');
-                const horaText = `${hActual}:${mActual}`;
+                const hActual = ara.getHours();
+                const mActual = ara.getMinutes();
 
-                const pròximsTrens = rows.map(row => {
-                    const celdes = row.querySelectorAll('td');
-                    return {
-                        hora: celdes[0]?.innerText.trim() || "--:--",
-                        desti: celdes[1]?.innerText.trim() || "Direcció desconeguda"
-                    };
+                const trens = rows.map(row => {
+                    const celda = row.querySelectorAll('td')[colIndex];
+                    const text = celda ? celda.innerText.trim() : "";
+                    if (!text || text === "-") return null;
+
+                    let [temps, period] = [text.slice(0, -2), text.slice(-2).toLowerCase()];
+                    let [h, m] = temps.split(':').map(Number);
+                    if (period === 'pm' && h !== 12) h += 12;
+                    if (period === 'am' && h === 12) h = 0;
+                    
+                    return { horaOriginal: text, h, m };
                 })
-                .filter(tren => tren.hora > horaText) // Només trens futurs
-                .slice(0, 6); // Els 6 primers
+                .filter(t => t !== null && (t.h > hActual || (t.h === hActual && t.m > mActual)))
+                .sort((a, b) => (a.h * 60 + a.m) - (b.h * 60 + b.m))
+                .slice(0, 5);
 
-                if (pròximsTrens.length === 0) {
-                    display.innerHTML = '<p class="text-center py-10 text-gray-400 italic">No hi ha més trens programats per a hui.</p>';
-                    return;
-                }
-
-                // Generem el llistat estilitzat
-                display.innerHTML = pròximsTrens.map(tren => `
-                    <div class="flex items-center justify-between p-5 rounded-2xl border border-gray-100 bg-white hover:border-yellow-200 transition-all shadow-sm">
-                        <div class="flex items-center gap-4">
-                            <div class="bg-yellow-500 text-white w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm shadow-md shadow-yellow-200">1</div>
-                            <div>
-                                <p class="font-black text-gray-900 text-lg leading-tight uppercase tracking-tighter">${tren.desti}</p>
-                                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">L1 Metrovalencia</p>
+                if (trens.length === 0) {
+                    display.innerHTML = '<p class="text-center py-20 font-black text-slate-300 uppercase italic">No queden més trens per hui</p>';
+                } else {
+                    display.innerHTML = trens.map(t => `
+                        <div class="flex items-center justify-between p-6 rounded-[30px] border border-slate-50 bg-white shadow-sm hover:shadow-md transition-all group">
+                            <div class="flex items-center gap-5">
+                                <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center font-black text-yellow-600 group-hover:bg-yellow-500 group-hover:text-white transition-colors">1</div>
+                                <div>
+                                    <p class="font-black text-slate-800 text-lg uppercase tracking-tighter">Castelló</p>
+                                    <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest">Provinent d'Empalme</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-3xl font-black text-slate-900 tracking-tighter italic">${t.horaOriginal.replace(/[am|pm]/g, '')}</p>
+                                <span class="text-[8px] font-black bg-slate-100 text-slate-500 px-2 py-1 rounded-lg uppercase">${t.horaOriginal.includes('am') ? 'Matí' : 'Vesprada'}</span>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <p class="text-2xl font-black text-gray-900 leading-none tracking-tighter">${tren.hora}</p>
-                            <span class="text-[9px] font-black bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-md uppercase mt-2 inline-block">Programat</span>
-                        </div>
-                    </div>
-                `).join('');
-
-            } catch (error) {
-                console.error(error);
-                display.innerHTML = `
-                    <div class="bg-red-50 p-6 rounded-2xl border border-red-100 text-center">
-                        <p class="text-red-600 font-bold">⚠️ No s'han pogut carregar els horaris</p>
-                        <p class="text-red-400 text-xs mt-1 italic italic">Verifica que la carpeta 'horaris' està correctament pujada al servidor.</p>
-                    </div>`;
+                    `).join('');
+                }
+            } catch (e) {
+                display.innerHTML = '<div class="p-8 bg-red-50 text-red-500 rounded-[30px] border border-red-100 text-center font-bold text-xs uppercase">⚠️ Error: Fitxer "1.html" no trobat.</div>';
             }
         });
     </script>
