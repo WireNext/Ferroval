@@ -155,7 +155,7 @@
 
             try {
                 // RUTA: Canvia '/horaris/' per la ruta real on puges la carpeta html de Metrovalencia
-                const response = await fetch(`horaris/metrovlc/metro/1.html`);
+                const response = await fetch(`/horaris/metrovlc/metro/1.html`);
                 if (!response.ok) throw new Error('Fitxer no trobat');
                 
                 const htmlText = await response.text();
