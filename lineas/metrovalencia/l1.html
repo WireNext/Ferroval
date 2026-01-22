@@ -138,7 +138,7 @@
 
             try {
                 // RUTA AL FITXER QUE ENS HAS MOSTRAT
-                const response = await fetch('/horaris/metrovlc/metro/1.html');
+                const response = await fetch('/horaris/metrovlc/20260102-20260228/1.html');
                 const htmlText = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(htmlText, 'text/html');
