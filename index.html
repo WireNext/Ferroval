@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ca-VA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferroval - El portal ferroviari de la Comunitat Valenciana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); }
+        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <header class="hero-gradient text-white pb-20 pt-10 px-4 shadow-xl">
+        <div class="container mx-auto text-center">
+            <h1 class="text-5xl font-black tracking-tighter italic mb-2">FERROVAL</h1>
+            <p class="text-lg font-light opacity-90 uppercase tracking-widest">Informació ferroviària en temps real</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 -mt-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <a href="avisos.html" class="bg-white p-6 rounded-2xl shadow-lg border-b-4 border-red-500 card-hover">
+                <div class="flex items-center mb-4">
+                    <span class="text-3xl mr-3">⚠️</span>
+                    <h2 class="text-xl font-bold text-gray-800">Estat del Servei</h2>
+                </div>
+                <p class="text-gray-600 text-sm">Consulta les incidències actuals en Rodalia, Metro i TRAM.</p>
+                <span class="inline-block mt-4 text-red-600 font-bold text-sm uppercase">Veure avisos →</span>
+            </a>
+
+            <a href="lineas.html" class="bg-white p-6 rounded-2xl shadow-lg border-b-4 border-orange-500 card-hover">
+                <div class="flex items-center mb-4">
+                    <span class="text-3xl mr-3">🗺️</span>
+                    <h2 class="text-xl font-bold text-gray-800">Línies i Plànols</h2>
+                </div>
+                <p class="text-gray-600 text-sm">Mapes, parades i horaris de tota la xarxa ferroviària valenciana.</p>
+                <span class="inline-block mt-4 text-orange-600 font-bold text-sm uppercase">Explorar xarxa →</span>
+            </a>
+
+            <div class="bg-white p-6 rounded-2xl shadow-lg border-b-4 border-blue-500 card-hover">
+                <div class="flex items-center mb-4">
+                    <span class="text-3xl mr-3">📰</span>
+                    <h2 class="text-xl font-bold text-gray-800">Actualitat</h2>
+                </div>
+                <p class="text-gray-600 text-sm">Licitacions, obres del Canal d'Accés i novetats del sector.</p>
+                <span class="inline-block mt-4 text-blue-600 font-bold text-sm uppercase">Pròximament</span>
+            </div>
+        </div>
+
+        <section class="mt-16 mb-12">
+            <h3 class="text-2xl font-bold text-center text-gray-800 mb-8 uppercase tracking-tight">Operadors a la Comunitat</h3>
+            
+            <div class="flex flex-wrap justify-center gap-8 opacity-60">
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">R</div>
+                    <span class="text-xs mt-2 font-bold">Rodalia</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">M</div>
+                    <span class="text-xs mt-2 font-bold">Metrovalencia</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">T</div>
+                    <span class="text-xs mt-2 font-bold">TRAM</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white p-10 mt-20 text-center">
+        <p class="font-bold italic text-orange-500 mb-2">FERROVAL</p>
+        <p class="text-gray-400 text-sm">Creat per a la comunitat ferroviària valenciana.</p>
+    </footer>
+
+</body>
+</html>

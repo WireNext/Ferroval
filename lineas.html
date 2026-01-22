@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ca-VA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Línies i Xarxa - Ferroval</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .badge { @apply inline-flex items-center justify-center w-8 h-8 rounded-full text-white font-bold text-sm mr-2 shadow-sm; }
+        .card-operador { @apply bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 mb-8; }
+        .header-operador { @apply p-4 text-white font-bold flex justify-between items-center; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <nav class="bg-orange-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-black italic tracking-tighter">FERROVAL</a>
+            <a href="/" class="text-sm bg-orange-700 px-3 py-1 rounded-lg">← Tornar</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 max-w-5xl">
+        <h1 class="text-3xl font-bold my-8 text-gray-800">Mapa de la Xarxa Ferroviària</h1>
+
+        <div class="card-operador">
+            <div class="header-operador bg-red-600">
+                <span>Metrovalencia</span>
+                <span class="text-xs uppercase opacity-80 italic underline">FGV</span>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="lineas/metrovalencia/l1.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #f3bc2e;">1</span>
+                    <span class="font-medium">Bétera - Castelló</span>
+                </a>
+                <a href="/lineas/metrovlc/l2.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #ef4b4d;">2</span>
+                    <span class="font-medium">Llíria - Torrent Avinguda</span>
+                </a>
+                <a href="/lineas/metrovlc/l3.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #ea2e49;">3</span>
+                    <span class="font-medium">Rafelbunyol - Aeroport</span>
+                </a>
+                <a href="/lineas/metrovlc/l10.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #4cb8e8;">10</span>
+                    <span class="font-medium">Alacant - Natzaret</span>
+                </a>
+                </div>
+        </div>
+
+        <div class="card-operador">
+            <div class="header-operador bg-red-700">
+                <span>Rodalia València</span>
+                <span class="text-xs uppercase opacity-80 italic underline">Renfe</span>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="/lineas/cercanias/c1.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #003399;">C1</span>
+                    <span class="font-medium">València N. - Gandia</span>
+                </a>
+                <a href="/lineas/cercanias/c2.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #ee3a43;">C2</span>
+                    <span class="font-medium">València N. - Moixent</span>
+                </a>
+                <a href="/lineas/cercanias/c6.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #99cc33;">C6</span>
+                    <span class="font-medium">València N. - Castelló</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="card-operador">
+            <div class="header-operador bg-blue-600">
+                <span>TRAM d'Alacant</span>
+                <span class="text-xs uppercase opacity-80 italic underline">FGV</span>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/lineas/tram/l1.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #e30613;">L1</span>
+                    <span class="font-medium">Luceros - Benidorm</span>
+                </a>
+                <a href="/lineas/tram/l3.html" class="flex items-center p-3 hover:bg-gray-50 rounded-xl border border-transparent hover:border-gray-200 transition">
+                    <span class="badge" style="background-color: #00b0ca;">L3</span>
+                    <span class="font-medium">Luceros - El Campello</span>
+                </a>
+            </div>
+        </div>
+
+        <section class="mt-12 bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+            <h2 class="text-xl font-bold mb-4">Plànol General de la Xarxa</h2>
+            
+            <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
+                <img src="https://www.metrovalencia.es/wp-content/uploads/2022/05/Plano-Red-Metrovalencia-Mayo-2022.png" alt="Mapa Metrovalencia" class="w-full h-auto">
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="p-10 text-center text-gray-400 text-sm italic">
+        Ferroval - Tota la informació de les vies valencianes
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+Agencies: Metro Valencia
+Feed Version: Unknown
+GTFS-to-HTML Version: 2.12.3
+Date Generated: 2026-01-21T17:02:13.082Z
+Timetable Page Count: 114
+Timetable Count: 114
+Calendar Service ID Count: 695
+Route Count: 114
+Trip Count: 6624
+Stop Count: 2348
+Source: C:/Users/angel/Downloads/ferroval-dades-metro/20260115_090010_Metro_Valencia.zip

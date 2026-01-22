@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ca-VA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incidències en Temps Real - Ferroval</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estils base de la llista */
+        #panell-incidencies li { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); 
+            list-style: none; 
+            border-left: 10px solid #e5e7eb; /* El color canviarà dinàmicament */
+            transition: transform 0.2s;
+        }
+        #panell-incidencies li:hover { transform: translateY(-2px); }
+
+        /* Etiquetes de línies */
+        .linea-cercanias, .linea-metro {
+            color: white;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-right: 6px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .logo-servei { 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            color: #4b5563; 
+            text-transform: uppercase; 
+            display: block; 
+            margin-bottom: 8px; 
+            letter-spacing: 0.05em;
+        }
+
+        .fecha-aviso { color: #6b7280; font-size: 0.75rem; display: block; margin-top: 10px; border-top: 1px solid #f3f4f6; pt-2; }
+        
+        /* Animació de càrrega */
+        .loader {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #f97316;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <nav class="bg-orange-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-black italic tracking-tighter">FERROVAL</a>
+            <div class="space-x-4 font-medium">
+                <a href="index.html" class="hover:text-orange-200 text-sm">Inici</a>
+                <a href="/lineas.html" class="hover:text-orange-200 text-sm">Línies</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 max-w-4xl">
+        <header class="py-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 tracking-tight">Estat del Servei</h1>
+                <p class="text-gray-600">Comunitat Valenciana · Temps Real</p>
+            </div>
+            <div id="status-icon" class="h-4 w-4 rounded-full bg-green-500 animate-pulse"></div>
+        </header>
+
+        <div id="estat-carrega" class="bg-white p-12 rounded-2xl text-center shadow-sm">
+            <div class="flex justify-center mb-4"><div class="loader"></div></div>
+            <p class="text-gray-500">Connectant amb els servidors de Renfe i FGV...</p>
+        </div>
+
+        <ul id="panell-incidencies" class="hidden"></ul>
+    </main>
+
+    <script>
+        // CONFIGURACIÓ DE COLORS I RUTES
+        const coloresLineasCercanias = { '01': '#003399', '02': '#ee3a43', '03': '#ffcc00', '04': '#009966', '05': '#ff6600', '06': '#99cc33' };
+        const colorsLineasMetroValencia = { '1': '#f3bc2e', '2': '#ef4b4d', '3': '#ea2e49', '4': '#29b891', '5': '#5297c6', '6': '#713b91', '7': '#f7a119', '8': '#86d0bb', '9': '#b47b4e', '10': '#4cb8e8' };
+        const coloresLineasTramAlacant = { '1': '#e30613', '2': '#009a44', '3': '#00b0ca', '4': '#f4911e', '5': '#005740', '9': '#8d5624' };
+        const valenciaRouteIds = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C-1', 'C-2', 'C-3', 'C-4', 'C-5', 'C-6', '60', '61', '62', '63', '64', '65'];
+
+        function createServiceLogo(nom) { return `<span class="logo-servei">${nom}</span>`; }
+        function formatTimestamp(ts) { return new Date(ts * 1000).toLocaleString('ca-VA', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); }
+
+        const formatters = {
+            'Rodalia València': (data) => {
+                if (!data || !data.entity || data.entity.length === 0) return '';
+                const serviceLogo = createServiceLogo('Rodalia València');
+                
+                const avisos = data.entity.map(entity => entity.alert).filter(alert => {
+                    if (!alert || !alert.descriptionText) return false;
+                    if (!alert.informedEntity) return true;
+                    return alert.informedEntity.some(e => valenciaRouteIds.includes(e.routeId));
+                });
+
+                return avisos.map(incidencia => {
+                    const texto = incidencia.descriptionText.translation[0]?.text.replace(/\n/g, '<br>') || '';
+                    const inicio = incidencia.activePeriod?.[0]?.start ? `<small class="fecha-aviso">Actualitzat: ${formatTimestamp(incidencia.activePeriod[0].start)}</small>` : '';
+                    // COLOR ROIG RENFE
+                    return `<li style="border-left-color: #ee3a43;">${serviceLogo}<p>${texto}</p>${inicio}</li>`;
+                });
+            },
+
+            'Metrovalencia': (incidencias) => {
+                if (!incidencias || incidencias.length === 0) return '';
+                const serviceLogo = createServiceLogo('Metrovalencia');
+                return incidencias.map(i => {
+                    const lineas = (i.lineas_afectadas) ? i.lineas_afectadas.map(linea => {
+                        const num = linea.match(/\d+/)?.[0];
+                        const color = colorsLineasMetroValencia[num] || '#ef4b4d';
+                        return `<span class="linea-metro" style="background-color: ${color}">L${num}</span>`;
+                    }).join(' ') : ''; 
+                    const texto = i.texto_alerta.replace(/\n/g, '<br>');
+                    // COLOR ROIG METROVALENCIA
+                    return `<li style="border-left-color: #ef4b4d;">${serviceLogo}${lineas}<p>${texto}</p></li>`;
+                });
+            },
+
+            'TRAM d’Alacant': (incidencias) => {
+                if (!incidencias || incidencias.length === 0) return '';
+                const serviceLogo = createServiceLogo('TRAM d’Alacant');
+                return incidencias.map(i => {
+                    const lineas = (i.lineas_afectadas) ? i.lineas_afectadas.map(linea => {
+                        const num = linea.match(/\d+/)?.[0];
+                        const color = coloresLineasTramAlacant[num] || '#f4911e';
+                        return `<span class="linea-metro" style="background-color: ${color}">L${num}</span>`;
+                    }).join(' ') : '';
+                    const texto = i.texto_alerta.replace(/\n/g, '<br>');
+                    // COLOR TARONJA TRAM
+                    return `<li style="border-left-color: #f4911e;">${serviceLogo}${lineas}<p>${texto}</p></li>`;
+                });
+            }
+        };
+
+        const fonts = [
+            { nom: 'Rodalia València', url: 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent('https://gtfsrt.renfe.com/alerts.json') },
+            { nom: 'Metrovalencia', url: 'https://raw.githubusercontent.com/WireNext/MetroValenciaIncidencias/refs/heads/main/avisos_metrovalencia.json' },
+            { nom: 'TRAM d’Alacant', url: 'https://raw.githubusercontent.com/WireNext/TramAlicanteIncidencias/refs/heads/main/avisos_tramalacant.json' }
+        ];
+
+        async function render() {
+            const container = document.getElementById('panell-incidencies');
+            const loader = document.getElementById('estat-carrega');
+            let content = '';
+
+            for (const font of fonts) {
+                try {
+                    const res = await fetch(font.url);
+                    const data = await res.json();
+                    const items = formatters[font.nom](data);
+                    if (Array.isArray(items)) content += items.join('');
+                } catch (e) { console.error("Error en " + font.nom, e); }
+            }
+
+            loader.classList.add('hidden');
+            container.classList.remove('hidden');
+            if (content === '') {
+                container.innerHTML = `
+                    <li class="border-none shadow-none bg-white p-8 text-center rounded-2xl border border-gray-100">
+                        <div class="text-4xl mb-3">✅</div>
+                        <p class="font-bold text-gray-800">Circulació normal</p>
+                        <p class="text-gray-500 text-sm">No hi ha alertes actives en la xarxa ferroviària.</p>
+                    </li>`;
+            } else {
+                container.innerHTML = content;
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>

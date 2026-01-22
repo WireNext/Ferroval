@@ -1,0 +1,11 @@
+Agencies: Renfe Cercanias
+Feed Version: Unknown
+GTFS-to-HTML Version: 2.12.3
+Date Generated: 2026-01-22T14:44:47.966Z
+Timetable Page Count: 29
+Timetable Count: 203
+Calendar Service ID Count: 870
+Route Count: 29
+Trip Count: 6626
+Stop Count: 3651
+Source: C:/Users/angel/Downloads/ferroval-dades-renfe/20260121_050013_RENFE_CERCA.zip
